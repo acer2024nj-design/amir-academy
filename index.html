@@ -45,7 +45,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // Supabase Auth configuration: replace the URL below with your exact project URL (without /rest/v1/)
-const SUPABASE_URL = 'https://qcfdgzistdeiymzwayfn.supabase.co';
+SUPABASE_URL = 'https://qcfdgzistdeiymzwayfn.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_fseWtWb8VEuaXtmP65mR7w_PQeG5ogA';
 let supabaseAuth = null;
 try { if(window.supabase && SUPABASE_URL.startsWith('https://') && SUPABASE_URL.includes('.supabase.co')) supabaseAuth=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY); } catch(e) {}

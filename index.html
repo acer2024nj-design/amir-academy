@@ -10,10 +10,28 @@
 @media(max-width:760px){.navlinks{gap:10px;font-size:12px}.navlinks a{white-space:nowrap}.grid{grid-template-columns:1fr!important}}
 
 #live-markets .livegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.livechart{padding:16px;overflow:hidden}.livechart h3{margin:0 0 14px}.tvframe{height:440px;border-radius:12px;overflow:hidden;background:#0b1117}.tvframe iframe{width:100%;height:100%;border:0}@media(max-width:700px){#live-markets .livegrid{grid-template-columns:1fr}.tvframe{height:390px}}
+
+.auth-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.auth-actions button{font-family:inherit}
+.authbtn{background:transparent;border:1px solid #00e38a;color:#00e38a;padding:9px 13px;border-radius:10px;cursor:pointer;font-weight:700}
+.authbtn.primary{background:#00e38a;color:#06140d}
+.authmodal{position:fixed;inset:0;z-index:30;background:#000b;display:none;align-items:center;justify-content:center;padding:16px}
+.authmodal.show{display:flex}
+.authpanel{width:min(430px,100%);background:#10161c;border:1px solid #28513e;border-radius:20px;padding:24px;max-height:90vh;overflow:auto;box-shadow:0 25px 80px #0009}
+.authpanel h2{margin:0 0 8px;color:#00e38a}.authpanel p{color:#a5b2bc;line-height:1.8}
+.authpanel label{display:block;color:#b7c2cb;font-size:13px;margin:15px 0 7px}
+.authpanel input{width:100%;padding:12px;border-radius:10px;background:#080d12;color:#fff;border:1px solid #293740;outline:none}
+.authpanel input:focus{border-color:#00e38a}
+.authpanel .authsubmit{width:100%;margin-top:17px;padding:12px;border-radius:10px;background:#00e38a;color:#07150e;border:0;font-weight:800;cursor:pointer}
+.authpanel .authlinks{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
+.authpanel .authlinks button{background:none;border:0;color:#00e38a;cursor:pointer;font-family:inherit}
+.authclose{float:left;border:0;background:#202a30;color:white;border-radius:8px;padding:6px 11px;cursor:pointer}
+.authmessage{margin-top:14px;border-radius:10px;padding:12px;background:#10261c;color:#a6eac8;line-height:1.8;font-size:13px;display:none}
+#authUser{color:#00e38a;font-size:13px}
 </style>
 </head>
 <body>
-<header><nav class="nav"><a class="logo" href="#home">AMIR <span>ACADEMY</span></a><div class="navlinks"><a href="#courses">مسیر یادگیری</a><a href="#packages">پکیج‌ها</a><a href="#live-markets">بازار زنده</a><a href="#tools">ابزارها</a><a href="#terms">واژه‌نامه</a><a href="#about">درباره</a></div><a class="navbtn" href="#courses">شروع رایگان</a></nav></header>
+<header><nav class="nav"><a class="logo" href="#home">AMIR <span>ACADEMY</span></a><div class="navlinks"><a href="#courses">مسیر یادگیری</a><a href="#packages">پکیج‌ها</a><a href="#live-markets">بازار زنده</a><a href="#tools">ابزارها</a><a href="#terms">واژه‌نامه</a><a href="#about">درباره</a></div><a class="navbtn" href="#courses">شروع رایگان</a><div class="auth-actions"><button class="authbtn" onclick="openAuth('login')">ورود / Login</button><button class="authbtn primary" onclick="openAuth('signup')">ثبت‌نام / Sign Up</button><span id="authUser"></span><button id="logoutBtn" class="authbtn" style="display:none" onclick="authLogout()">خروج</button></div></nav></header>
 <main>
 <section class="hero wrap" id="home"><div><span class="pill">✦ آموزش رایگان بازارهای مالی</span><h1>هوشمندانه یاد بگیر.<br><em>مستقل معامله کن.</em></h1><p>از اولین قدم تا ساخت یک سیستم معاملاتی؛ مفاهیم بازار، تحلیل تکنیکال، مدیریت ریسک و روانشناسی معامله‌گری را با مسیر آموزشی منظم یاد بگیر.</p><div class="actions"><a class="btn" href="#courses">شروع مسیر یادگیری ←</a><a class="btn secondary" href="#tools">ابزارهای رایگان</a></div><div class="stats"><div class="stat"><strong>۱۰۰٪ رایگان</strong><small>محتوای آموزشی</small></div><div class="stat"><strong>۴ مسیر</strong><small>آموزش مرحله‌ای</small></div><div class="stat"><strong>+ ابزار</strong><small>محاسبات کاربردی</small></div></div></div><div class="visual"><div class="charttop"><div><strong>بازار در یک نگاه</strong><br><small>نمایشی · بدون داده زنده</small></div><span class="chartbadge">● Demo</span></div><div class="chart"><svg viewBox="0 0 500 230" preserveAspectRatio="none"><defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#00e38a" stop-opacity=".28"/><stop offset="1" stop-color="#00e38a" stop-opacity="0"/></linearGradient></defs><g stroke="#23332e" stroke-width="1"><path d="M0 40H500 M0 85H500 M0 130H500 M0 175H500"/><path d="M70 0V230 M150 0V230 M230 0V230 M310 0V230 M390 0V230"/></g><path d="M0 185 L30 168 L55 179 L82 140 L110 154 L140 120 L170 135 L198 99 L225 113 L252 82 L280 97 L305 70 L332 88 L360 58 L390 77 L420 40 L448 55 L475 28 L500 38 L500 230 L0 230Z" fill="url(#fill)"/><path d="M0 185 L30 168 L55 179 L82 140 L110 154 L140 120 L170 135 L198 99 L225 113 L252 82 L280 97 L305 70 L332 88 L360 58 L390 77 L420 40 L448 55 L475 28 L500 38" fill="none" stroke="#00e38a" stroke-width="3" stroke-linejoin="round"/><circle cx="475" cy="28" r="5" fill="#00e38a"/></svg></div><div style="display:flex;justify-content:space-between;margin-top:15px;color:#94a5af;font-size:12px"><span>مفاهیم نمودار</span><span>تمرین · یادگیری · تکرار</span></div></div></section>
 <section class="section wrap" id="courses"><div class="sectionhead"><div><h2>مسیرهای آموزشی</h2><p>روی هر مسیر بزن تا درس‌ها و توضیحات را ببینی.</p></div><span class="pill">آموزش گام‌به‌گام</span></div><div class="grid" id="courseGrid"></div></section>
@@ -36,6 +54,10 @@
 <section class="section wrap" id="terms"><div class="sectionhead"><div><h2>واژه‌نامه معامله‌گری</h2><p>اصطلاحات پایه را مرور کن.</p></div></div><div class="terms" id="termsGrid"></div></section>
 <section class="section wrap" id="about"><div class="aboutbox"><div><span class="pill">درباره Amir Academy</span><h2>دانش بازار؛ فرصتی برای رشد</h2><p>آکادمی امیر با مدیریت <strong style="color:var(--green);direction:ltr;display:inline-block">Amir Najafzadeh</strong> و همراهی تیم ما ایجاد شده است؛ با هدف فراهم کردن آموزش رایگان، افزایش آگاهی مالی، یادگیری مهارت‌های بازارهای مالی و کمک به رشد دانش و توانمندی افراد. باور داریم آموزش باکیفیت باید تا حد امکان در دسترس همه باشد. این مسیر برای یادگیری، تمرین مسئولانه و توسعه مهارت طراحی شده، نه وعده درآمد قطعی. هیچ‌کدام از مطالب توصیه خرید یا فروش نیست. ترید ریسک بالایی دارد و امکان از دست دادن سرمایه وجود دارد؛ ابتدا با حساب آزمایشی تمرین کن و برای هر معامله برنامه مدیریت ریسک داشته باش.</p></div><a class="btn secondary" href="#courses">مطالعه آموزش‌ها</a></div></section>
 </main><footer class="footer"><div class="wrap footrow"><span>© 2026 AMIR ACADEMY — یادگیری رایگان بازارهای مالی</span><span>ساخته‌شده توسط <strong style="color:var(--green)">امیر نجف‌زاده</strong> و تیم آکادمی</span><span>این سایت آموزشی است و مشاوره سرمایه‌گذاری ارائه نمی‌دهد.</span></div></footer>
+
+<div class="authmodal" id="authModal" onclick="if(event.target===this)closeAuth()">
+ <div class="authpanel"><button class="authclose" onclick="closeAuth()">×</button><div id="authContent"></div><div class="authmessage" id="authMessage"></div></div>
+</div>
 <div class="modal" id="lessonModal" onclick="if(event.target===this)closeLesson()"><div class="modalbox"><button class="close" onclick="closeLesson()">بستن ×</button><h2 id="modalTitle"></h2><div id="modalContent"></div></div></div><div class="toast" id="toast"></div>
 <script>
 const courses=[{title:'مبانی بازارهای مالی',icon:'◈',desc:'با ساختار بازار، انواع دارایی‌ها و اصول اولیه معامله‌گری آشنا شو.',duration:'۶ درس',lessons:[['بازار مالی چیست؟','بازار مالی بستری برای مبادله ابزارهای مالی مانند سهام، ارز، کالا و اوراق است. قیمت‌ها تحت تأثیر عرضه و تقاضا، اطلاعات، نقدینگی و عوامل اقتصادی قرار می‌گیرند.'],['تفاوت سرمایه‌گذاری و معامله‌گری','سرمایه‌گذاری معمولاً افق بلندمدت دارد؛ معامله‌گری به تصمیم‌های کوتاه‌تر و مدیریت فعال موقعیت‌ها اشاره می‌کند. هیچ‌کدام بدون ریسک نیستند.'],['فارکس چیست؟','بازار تبادل ارزهاست. معاملات اغلب به شکل جفت ارز انجام می‌شوند و ریسک اهرم و نوسان دارند.'],['بازار طلا','طلا می‌تواند تحت تأثیر نرخ بهره، دلار، تورم، تقاضا و عوامل ژئوپلیتیک نوسان کند.'],['کریپتو چیست؟','دارایی‌های دیجیتال مبتنی بر فناوری‌های گوناگون؛ ریسک نوسان، امنیت و مقررات در این بازار بالاست.'],['ساختار کندل','کندل معمولاً قیمت بازشدن، بسته‌شدن، بیشترین و کمترین قیمت در بازه مشخص را نمایش می‌دهد.']]},{title:'تحلیل تکنیکال',icon:'⌁',desc:'نمودار، روند، حمایت و مقاومت و ابزارهای پایه تحلیل.',duration:'۷ درس',lessons:[['خواندن نمودار','نمودار قیمت تغییرات قیمت را در بازه‌های زمانی نمایش می‌دهد. تایم‌فریم‌های مختلف می‌توانند تصویر متفاوتی از بازار ارائه کنند.'],['روند چیست؟','روند صعودی، نزولی یا خنثی توصیف کلی حرکت قیمت است؛ تشخیص روند قطعی نیست و می‌تواند تغییر کند.'],['حمایت و مقاومت','مناطق احتمالی واکنش قیمت که از رفتار گذشته بازار برداشت می‌شوند؛ خطوط دقیق و تضمین‌شده نیستند.'],['خط روند','خطی برای نمایش شیب حرکت بازار که بر نقاط انتخابی رسم می‌شود؛ رسم آن تا حدی ذهنی است.'],['اندیکاتورها','ابزارهایی محاسباتی مانند RSI یا میانگین متحرک؛ معمولاً از داده قیمت مشتق می‌شوند و تأخیر یا سیگنال خطا دارند.'],['تایم‌فریم','مدت زمان تشکیل هر کندل؛ تحلیل چند تایم‌فریم نیازمند سازگاری با برنامه معامله است.'],['تمرین تحلیل','یک نمودار را بدون معامله علامت‌گذاری کن، فرضیه بنویس و بعد نتیجه را با رفتار واقعی بازار مقایسه کن.']]},{title:'پرایس اکشن',icon:'⌖',desc:'رفتار قیمت، ساختار بازار و سناریوهای تحلیلی.',duration:'۶ درس',lessons:[['ساختار بازار','به نقاط سقف و کف و تغییرات آن‌ها نگاه کن؛ ساختار فقط یک روش تفسیر است نه پیش‌بینی قطعی.'],['شکست ساختار','حرکت قیمت از یک سطح ساختاری مهم می‌تواند نشانه تغییر رفتار باشد؛ شکست‌های کاذب هم رخ می‌دهند.'],['کندل‌های بازگشتی','الگوهایی مثل پین‌بار یا پوشا باید در زمینه نمودار بررسی شوند و به‌تنهایی مزیت آماری تضمین نمی‌کنند.'],['محدوده و نوسان','محدوده‌های تراکم و نوسان به توصیف رفتار بازار کمک می‌کنند؛ خروج از محدوده لزوماً ادامه‌دار نیست.'],['سناریو نویسی','قبل از ورود، سناریو، نقطه بی‌اعتبار شدن، ریسک و شرایط عدم معامله را مشخص کن.'],['ژورنال','دلیل معامله، تصویر قبل و بعد، ریسک، احساسات و نتیجه را ثبت و به صورت دوره‌ای مرور کن.']]},{title:'مدیریت ریسک و روانشناسی',icon:'⬡',desc:'مهم‌ترین مهارت: کنترل ریسک، نظم و رفتار در شرایط دشوار.',duration:'۷ درس',lessons:[['ریسک هر معامله','میزان زیان احتمالی را پیش از ورود مشخص کن؛ درصد کوچک ریسک نیز در مجموعه معاملات می‌تواند جمع شود.'],['حد ضرر','سطحی برای خروج در صورت بی‌اعتبار شدن فرضیه؛ اجرای آن ممکن است به دلیل لغزش قیمت یا شرایط بازار متفاوت باشد.'],['نسبت ریسک به بازده','مقایسه ریسک بالقوه با سود بالقوه است؛ نسبت بالا به‌تنهایی معامله را سودآور نمی‌کند.'],['اهرم و مارجین','اهرم سود و زیان را نسبت به سرمایه درگیر بزرگ می‌کند؛ احتمال زیان سریع و لیکویید شدن وجود دارد.'],['روانشناسی معامله','ترس، طمع، انتقام از بازار و اعتمادبه‌نفس بیش از حد می‌توانند تصمیم‌ها را مختل کنند.'],['قوانین شخصی','حد زیان روزانه، تعداد معاملات و شرایط توقف را از پیش تعیین کن و به آن پایبند باش.'],['آزمون و ژورنال','در حساب آزمایشی، مجموعه‌ای از معاملات با قوانین ثابت ثبت کن و نتایج را ارزیابی کن؛ گذشته تضمین آینده نیست.']] }];
@@ -48,4 +70,74 @@ function closeLesson(){document.getElementById('lessonModal').classList.remove('
 function calcRisk(){let b=+balance.value,r=+risk.value,e=+entry.value,s=+stop.value;if([b,r,e,s].some(x=>!isFinite(x))||b<=0||r<0||e===s){riskResult.textContent='لطفاً مقادیر معتبر وارد کن.';return}let cash=b*r/100,dist=Math.abs(e-s);riskResult.innerHTML=`ریسک پولی: <b>${cash.toFixed(2)} دلار</b><br>فاصله قیمت تا حد ضرر: <b>${dist.toFixed(5)}</b><br>درصد ریسک حساب: <b>${r}%</b><br><small>محاسبه حجم دقیق معامله به ارزش هر واحد/پیپ و مشخصات قرارداد بستگی دارد.</small>`}
 function calcRR(){let e=+rrEntry.value,s=+rrStop.value,t=+rrTarget.value,d=direction.value;if([e,s,t].some(x=>!isFinite(x))){rrResult.textContent='مقادیر معتبر وارد کن.';return}let risk=d==='long'?e-s:s-e,rew=d==='long'?t-e:e-t;if(risk<=0||rew<=0){rrResult.textContent='برای جهت انتخاب‌شده، حد ضرر و هدف را در سمت صحیح ورود قرار بده.';return}rrResult.innerHTML=`ریسک: <b>${risk.toFixed(5)}</b><br>بازده بالقوه: <b>${rew.toFixed(5)}</b><br>نسبت R:R: <b>1 : ${(rew/risk).toFixed(2)}</b>`}
 renderCourses();renderTerms();
-</script></body></html>
+</script>
+<!-- Supabase authentication: replace the two config placeholders below after creating your Supabase project. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+let supabaseAuthClient = null;
+if(window.supabase && SUPABASE_URL.startsWith("https://") && SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"){
+  supabaseAuthClient = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+}
+function openAuth(view){
+  renderAuth(view);
+  document.getElementById('authModal').classList.add('show');
+}
+function closeAuth(){document.getElementById('authModal').classList.remove('show')}
+function authMsg(text){const m=document.getElementById('authMessage');m.textContent=text;m.style.display='block'}
+function renderAuth(view){
+  const c=document.getElementById('authContent'),m=document.getElementById('authMessage');m.style.display='none';
+  if(view==='signup'){
+    c.innerHTML=`<h2>Create account / ثبت‌نام</h2><p>برای ساخت حساب، ایمیل و رمز عبور خود را وارد کنید.</p>
+    <label>نام / Name</label><input id="authName" autocomplete="name" placeholder="Your name">
+    <label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com">
+    <label>Password (at least 6 characters)</label><input id="authPassword" type="password" autocomplete="new-password" placeholder="••••••••">
+    <button class="authsubmit" onclick="authSignup()">Create account</button>
+    <div class="authlinks"><button onclick="openAuth('login')">Already registered? Login</button><button onclick="openAuth('forgot')">Forgot password?</button></div>`;
+  }else if(view==='login'){
+    c.innerHTML=`<h2>Login / ورود</h2><p>به حساب آکادمی خود وارد شوید.</p>
+    <label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com">
+    <label>Password</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Password">
+    <button class="authsubmit" onclick="authLogin()">Login</button>
+    <div class="authlinks"><button onclick="openAuth('signup')">Create account</button><button onclick="openAuth('forgot')">Forgot password?</button></div>`;
+  }else{
+    c.innerHTML=`<h2>Reset password / بازیابی رمز</h2><p>ایمیل خود را وارد کنید تا لینک بازیابی ارسال شود.</p>
+    <label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com">
+    <button class="authsubmit" onclick="authReset()">Send reset email</button>
+    <div class="authlinks"><button onclick="openAuth('login')">Back to Login</button><button onclick="openAuth('signup')">Create account</button></div>`;
+  }
+}
+async function authSignup(){
+ if(!supabaseAuthClient){authMsg('اتصال احراز هویت هنوز تنظیم نشده است. ابتدا URL و Anon Key پروژه Supabase را در فایل قرار دهید.');return}
+ const name=document.getElementById('authName').value.trim(),email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;
+ if(!name||!email||password.length<6){authMsg('نام، ایمیل معتبر و رمز حداقل ۶ کاراکتری وارد کنید.');return}
+ const {data,error}=await supabaseAuthClient.auth.signUp({email,password,options:{data:{full_name:name},emailRedirectTo:location.origin+location.pathname}});
+ if(error){authMsg(error.message);return}
+ authMsg('ثبت‌نام انجام شد. اگر تأیید ایمیل در Supabase فعال باشد، صندوق ایمیل خود را برای تأیید حساب بررسی کنید.');
+}
+async function authLogin(){
+ if(!supabaseAuthClient){authMsg('اتصال احراز هویت هنوز تنظیم نشده است. URL و Anon Key پروژه Supabase لازم است.');return}
+ const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;
+ const {data,error}=await supabaseAuthClient.auth.signInWithPassword({email,password});
+ if(error){authMsg(error.message);return}
+ authMsg('ورود موفق بود.');closeAuth();refreshAuthUI();
+}
+async function authReset(){
+ if(!supabaseAuthClient){authMsg('اتصال احراز هویت هنوز تنظیم نشده است. URL و Anon Key پروژه Supabase لازم است.');return}
+ const email=document.getElementById('authEmail').value.trim();if(!email){authMsg('ایمیل را وارد کنید.');return}
+ const {error}=await supabaseAuthClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ if(error){authMsg(error.message);return}
+ authMsg('اگر این ایمیل در سیستم ثبت شده باشد، لینک بازیابی برای آن ارسال می‌شود. ایمیل خود را بررسی کنید.');
+}
+async function authLogout(){if(supabaseAuthClient)await supabaseAuthClient.auth.signOut();refreshAuthUI()}
+async function refreshAuthUI(){
+ const userEl=document.getElementById('authUser'),logout=document.getElementById('logoutBtn');
+ if(!supabaseAuthClient){userEl.textContent='';logout.style.display='none';return}
+ const {data:{session}}=await supabaseAuthClient.auth.getSession();
+ if(session?.user){userEl.textContent=session.user.email;logout.style.display='inline-block'}
+ else{userEl.textContent='';logout.style.display='none'}
+}
+if(supabaseAuthClient){supabaseAuthClient.auth.onAuthStateChange(()=>refreshAuthUI());refreshAuthUI()}
+</script>
+</body></html>

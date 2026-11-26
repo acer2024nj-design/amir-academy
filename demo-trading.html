@@ -1,37 +1,695 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>دمو ترید طلا | Amir Academy</title><style>
-:root{--bg:#080b10;--panel:#101720;--line:#25313b;--green:#00e38a;--red:#ff526a;--muted:#93a2b1;--txt:#edf3f7}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -20%,#12382a,transparent 40%),var(--bg);color:var(--txt);font-family:Tahoma,Arial,sans-serif}button,input,select{font:inherit}a{color:inherit;text-decoration:none}.top{position:sticky;top:0;background:#080b10ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:4}.nav{max-width:1450px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}.logo{direction:ltr;font-weight:900;color:var(--green);letter-spacing:1px}.logo span{color:#fff}.wrap{max-width:1450px;margin:auto;padding:24px}.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.badge{border:1px solid #23563e;color:var(--green);background:#0b2018;padding:7px 11px;border-radius:30px;font-size:12px}.card{background:linear-gradient(145deg,#121b25,#0d131a);border:1px solid var(--line);border-radius:17px;padding:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}.stat small{color:var(--muted)}.stat h2{margin:10px 0 0;direction:ltr;text-align:right}.price{color:var(--green)}.chart{height:520px;overflow:hidden;border-radius:17px;border:1px solid var(--line);background:#0b1017}.chart iframe{width:100%;height:100%;border:0}.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.7fr);gap:16px}.tradebox h3{margin-top:0}.tradebox label{display:block;color:var(--muted);font-size:13px;margin:12px 0 5px}.tradebox input,.tradebox select{width:100%;background:#080d13;color:#fff;border:1px solid #293642;padding:12px;border-radius:10px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.buy,.sell,.reset{border:0;padding:13px;border-radius:11px;font-weight:bold;cursor:pointer}.buy{background:var(--green);color:#04150c}.sell{background:var(--red);color:white}.reset{background:transparent;color:var(--muted);border:1px solid var(--line)}.hint{color:var(--muted);font-size:12px;line-height:1.8}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:right;padding:12px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted)}.positive{color:var(--green)}.negative{color:var(--red)}.empty{text-align:center;color:var(--muted);padding:25px}.footer{color:var(--muted);font-size:12px;line-height:1.9;margin:25px 0}.pill{padding:5px 8px;border-radius:8px;font-size:12px}.pill.buy{background:#0d3927;color:var(--green)}.pill.sell{background:#3a1720;color:var(--red)}@media(max-width:900px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.chart{height:400px}}@media(max-width:550px){.wrap{padding:13px}.nav{padding:13px}.chart{height:350px}.stats{gap:8px}.stat h2{font-size:20px}}
-</style></head><body>
-<header class="top"><div class="nav"><a class="logo" href="index.html">AMIR <span>ACADEMY</span></a><div class="row"><span class="badge">حساب مجازی · DEMO</span><span id="accountLabel" class="hint">در حال بررسی حساب…</span><button id="loginBtn" class="reset" type="button">ورود / حساب کاربری</button><button id="logoutBtn" class="reset" type="button" style="display:none">خروج</button><a class="hint" href="index.html">بازگشت به آکادمی ↗</a></div></div></header>
-<main class="wrap"><div class="row" style="justify-content:space-between"><div><h1 style="margin:5px 0 8px">محیط دمو ترید <span style="color:var(--green)">XAU/USD</span></h1><div class="hint">معامله آزمایشی با قیمت بازار و نمودار TradingView</div></div><div class="badge">● <span id="status">در حال اتصال قیمت…</span></div></div>
-<section class="stats"><div class="card stat"><small>قیمت مرجع طلا (USD/oz)</small><h2 class="price" id="quote">—</h2><small id="updated">در حال دریافت…</small></div><div class="card stat"><small>موجودی مجازی</small><h2 id="balance">$10,000.00</h2></div><div class="card stat"><small>سود / زیان شناور</small><h2 id="floating">$0.00</h2></div><div class="card stat"><small>Equity</small><h2 id="equity">$10,000.00</h2></div></section>
-<div class="grid"><section><div class="chart"><iframe title="TradingView XAUUSD live chart" src="https://www.tradingview.com/widgetembed/?frameElementId=tradingview_demo&symbol=OANDA%3AXAUUSD&interval=5&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=f1f3f6&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en" allowfullscreen></iframe></div><div class="card tablewrap" style="margin-top:15px"><h3>معاملات باز</h3><table><thead><tr><th>نوع</th><th>حجم (اونس)</th><th>ورود</th><th>قیمت فعلی</th><th>سود/زیان</th><th>عملیات</th></tr></thead><tbody id="positions"></tbody></table><div id="empty" class="empty">هنوز معامله‌ای باز نیست.</div></div>
-<div class="card tablewrap" style="margin-top:15px"><h3>تاریخچه معاملات بسته‌شده</h3><table><thead><tr><th>نوع</th><th>حجم</th><th>ورود</th><th>خروج</th><th>سود/زیان نهایی</th><th>زمان بسته‌شدن</th></tr></thead><tbody id="history"></tbody></table><div id="historyEmpty" class="empty">هنوز معامله بسته‌شده‌ای ثبت نشده.</div></div></section>
-<aside class="card tradebox"><h3>ثبت معامله آزمایشی</h3><div class="hint">سفارش با قیمت مرجع لحظه ثبت می‌شود. ارزش هر 1.00 حجم برابر یک اونس فرض شده است.</div><label for="volume">حجم (اونس)</label><input id="volume" type="number" value="0.10" min="0.01" max="100" step="0.01"><div class="buttons"><button class="buy" id="buy">BUY / خرید</button><button class="sell" id="sell">SELL / فروش</button></div><hr style="border-color:var(--line);margin:22px 0"><h3>حساب</h3><p class="hint">این حساب فقط دمو است و هیچ سفارش واقعی به بروکر ارسال نمی‌کند. موجودی اولیه 10,000 دلار مجازی است.</p><button class="reset" id="reset" style="width:100%">بازنشانی حساب دمو</button></aside></div>
-<div class="footer">نمودار از TradingView embed و قیمت مرجع از Gold API دریافت می‌شود (قیمت مرجع هر ۳۰ ثانیه بررسی می‌شود). این منابع ممکن است اختلاف جزئی داشته باشند؛ معاملات این صفحه شبیه‌سازی هستند و اجرا یا قیمت تضمین‌شده بروکر نیستند. <a href="https://gold-api.com/" target="_blank" rel="noopener">منبع قیمت</a></div></main>
-<div id="authOverlay" style="display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:16px"><div class="card" style="width:min(440px,100%);padding:24px"><button id="authClose" class="reset" style="float:left">✕</button><h2 style="color:var(--green);margin-top:0">ورود به حساب Amir Academy</h2><p class="hint">برای ذخیره معاملات دمو در فضای حساب کاربری، وارد حساب سایت شوید.</p><label class="hint" for="authEmail">ایمیل</label><input id="authEmail" type="email" autocomplete="email" style="width:100%;padding:12px;margin:8px 0;background:#080d13;color:white;border:1px solid #293642;border-radius:10px"><label class="hint" for="authPassword">رمز عبور</label><input id="authPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px;margin:8px 0;background:#080d13;color:white;border:1px solid #293642;border-radius:10px"><div class="buttons"><button id="authSubmit" class="buy">ورود</button><a class="reset" style="text-align:center;padding:12px" href="index.html">ثبت‌نام در سایت</a></div><div id="authMessage" class="hint" style="margin-top:12px"></div></div></div>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Terminal | Amir Academy</title>
+<style>
+:root{--bg:#080c12;
+--panel:#101823;
+--panel2:#0c131c;
+--line:#253443;
+--txt:#e7eef5;
+--muted:#92a5b8;
+--green:#00d992;
+--red:#ff536b;
+--gold:#f5c451;
+--blue:#5aa7ff}
+
+*{box-sizing:border-box}
+body{margin:0;
+background:radial-gradient(ellipse at 70% -20%,#123b2b,transparent 40%),var(--bg);
+color:var(--txt);
+font-family:Tahoma,Arial,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;
+text-decoration:none}
+
+header{position:sticky;
+top:0;
+z-index:10;
+background:#080c12ed;
+backdrop-filter:blur(12px);
+border-bottom:1px solid var(--line)}
+.nav{max-width:1600px;
+margin:auto;
+padding:13px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+flex-wrap:wrap}
+.logo{font-weight:900;
+letter-spacing:1px;
+direction:ltr;
+color:var(--green)}
+.logo span{color:#fff}
+.navright,.navleft,.inline{display:flex;
+align-items:center;
+gap:10px;
+flex-wrap:wrap}
+.tag{padding:7px 10px;
+border-radius:30px;
+border:1px solid #22553f;
+color:var(--green);
+background:#0b2118;
+font-size:12px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.wrap{max-width:1600px;
+margin:auto;
+padding:20px}
+.heading{display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap}
+.heading h1{font-size:23px;
+margin:8px 0}
+.card{background:linear-gradient(145deg,#121c27,#0d141d);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px}
+.stats{display:grid;
+grid-template-columns:repeat(6,minmax(130px,1fr));
+gap:12px;
+margin:18px 0}
+.stat small{color:var(--muted);
+font-size:12px}
+.stat strong{display:block;
+margin-top:9px;
+font-size:21px;
+direction:ltr;
+text-align:right}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.gold{color:var(--gold)}
+.layout{display:grid;
+grid-template-columns:minmax(0,1.7fr) minmax(310px,.65fr);
+gap:14px}
+.chartbox{height:510px;
+border-radius:15px;
+overflow:hidden;
+border:1px solid var(--line);
+background:#0b1118}
+.chartbox iframe{width:100%;
+height:100%;
+border:0}
+.marketbar{display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:12px}
+.marketbar select,.control,input,select{background:#080e15;
+color:var(--txt);
+border:1px solid #293a4b;
+padding:11px;
+border-radius:10px;
+outline:none}
+.control:focus,input:focus,select:focus{border-color:var(--blue)}
+.tabs{display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin:12px 0}
+.tab{padding:8px 12px;
+border:1px solid var(--line);
+background:#111b26;
+color:var(--muted);
+border-radius:9px}
+.tab.active{border-color:#2a805b;
+background:#103323;
+color:var(--green)}
+.panel-title{display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin:0 0 13px}
+.panel-title h3{font-size:15px;
+margin:0}
+.hint{font-size:12px;
+color:var(--muted);
+line-height:1.9}
+.formgrid{display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px}
+.field{margin-bottom:12px}
+.field label{display:block;
+font-size:12px;
+color:var(--muted);
+margin-bottom:7px}
+.field input,.field select{width:100%}
+.orderbuttons{display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:12px}
+.buy,.sell,.btn{border-radius:10px;
+padding:12px;
+border:1px solid transparent;
+font-weight:bold}
+.buy{background:var(--green);
+color:#04140d}
+.sell{background:var(--red);
+color:white}
+.btn{background:transparent;
+border-color:var(--line);
+color:var(--txt)}
+.btn:hover,.tab:hover{border-color:#4d657c}
+.danger{color:#ff9bab;
+border-color:#6b2735}
+.tablewrap{overflow:auto}
+table{width:100%;
+border-collapse:collapse;
+min-width:850px}
+th,td{padding:11px 10px;
+border-bottom:1px solid var(--line);
+text-align:right;
+font-size:12px;
+white-space:nowrap}
+th{color:var(--muted);
+font-weight:normal}
+tbody tr:hover{background:#ffffff06}
+.badge{padding:5px 8px;
+border-radius:8px;
+font-size:11px}
+.badge.buy{background:#0b3525;
+color:var(--green)}
+.badge.sell{background:#3b1821;
+color:var(--red)}
+.badge.tp{background:#102b22;
+color:var(--green)}
+.badge.sl{background:#321923;
+color:#ff8b9b}
+.empty{text-align:center;
+padding:26px;
+color:var(--muted)}
+.watchlist{display:flex;
+flex-direction:column;
+gap:7px}
+.watchrow{display:grid;
+grid-template-columns:1.2fr .8fr .8fr;
+align-items:center;
+gap:7px;
+padding:10px;
+border:1px solid var(--line);
+border-radius:10px;
+background:#0b121a;
+cursor:pointer;
+font-size:12px}
+.watchrow:hover,.watchrow.selected{border-color:#378463;
+background:#10231a}
+.watchrow .q{direction:ltr;
+text-align:left}
+.sectiongap{margin-top:14px}
+.footer{font-size:12px;
+color:var(--muted);
+line-height:1.9;
+margin:20px 0}
+.overlay{display:none;
+position:fixed;
+inset:0;
+background:#000b;
+z-index:30;
+align-items:center;
+justify-content:center;
+padding:15px}
+.modal{width:min(450px,100%);
+padding:22px}
+.toast{position:fixed;
+bottom:20px;
+left:20px;
+z-index:40;
+background:#142131;
+border:1px solid var(--line);
+padding:14px 18px;
+border-radius:12px;
+display:none}
+.toast.show{display:block}
+.progress{height:5px;
+background:#182635;
+border-radius:9px;
+overflow:hidden}
+.progress div{height:100%;
+background:var(--green);
+width:0}
+.two-col{display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px}
+.scrollnote{max-height:180px;
+overflow:auto}
+@media(max-width:1150px){.stats{grid-template-columns:repeat(3,1fr)}
+.layout{grid-template-columns:1fr}
+}
+@media(max-width:650px){.wrap{padding:12px}
+.nav{padding:12px}
+.stats{grid-template-columns:repeat(2,1fr);
+gap:8px}
+.stat strong{font-size:18px}
+.chartbox{height:380px}
+.two-col,.formgrid{grid-template-columns:1fr}
+.heading h1{font-size:20px}
+}
+
+</style>
+</head>
+<body>
+<header><div class="nav"><a class="logo" href="index.html">AMIR <span>ACADEMY</span></a><div class="navright"><span class="tag">حساب مجازی · DEMO</span><span id="accountLabel" class="muted small">در حال بررسی حساب…</span><button id="loginBtn" class="btn">ورود</button><button id="logoutBtn" class="btn" style="display:none">خروج</button><a class="btn" href="index.html">بازگشت به آکادمی</a></div>
+</div>
+</header>
+<main class="wrap">
+<div class="heading"><div><h1>ترمینال معاملات آزمایشی</h1><div class="hint">محیط تمرینی با حساب مجازی · سفارش‌ها واقعی نیستند و به بروکر ارسال نمی‌شوند.</div>
+</div>
+<div class="inline"><span class="tag" id="connection">در حال اتصال به بازار…</span><span class="tag" id="marketClock">--:--:--</span></div>
+</div>
+
+<section class="stats">
+<div class="card stat"><small>Balance · موجودی</small><strong id="balance">$10,000.00</strong></div>
+
+<div class="card stat"><small>Equity · ارزش حساب</small><strong id="equity">$10,000.00</strong></div>
+
+<div class="card stat"><small>Floating P/L · شناور</small><strong id="floating">$0.00</strong></div>
+
+<div class="card stat"><small>Free Margin · آزاد</small><strong id="freeMargin">$10,000.00</strong></div>
+
+<div class="card stat"><small>Margin · درگیر</small><strong id="margin">$0.00</strong></div>
+
+<div class="card stat"><small>Closed P/L · نتیجه بسته‌شده</small><strong id="closedPL">$0.00</strong></div>
+
+</section>
+
+<div class="layout">
+<section>
+<div class="card marketbar"><div><strong id="assetTitle">XAU/USD</strong><div class="hint" id="assetDescription">Gold · Metals</div>
+</div>
+<div class="inline"><select id="assetSelect" aria-label="انتخاب نماد"><option value="XAUUSD">Gold · XAU/USD</option><option value="XAGUSD">Silver · XAG/USD</option><option value="EURUSD">EUR/USD</option><option value="GBPUSD">GBP/USD</option><option value="USDJPY">USD/JPY</option><option value="USDCHF">USD/CHF</option><option value="AUDUSD">AUD/USD</option><option value="USDCAD">USD/CAD</option><option value="BTCUSD">Bitcoin · BTC/USD</option><option value="ETHUSD">Ethereum · ETH/USD</option></select><span id="selectedQuote" class="gold" style="direction:ltr;font-weight:bold">—</span></div>
+</div>
+
+<div class="card" style="margin-bottom:12px"><div class="panel-title"><h3>نمودار بازار</h3><span class="hint">TradingView · ابزارهای نمودار و بازه زمانی</span></div>
+<div id="chartBox" class="chartbox"></div>
+</div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>معاملات باز</h3><span class="hint" id="openCount">0 position</span></div>
+<div class="tablewrap"><table><thead><tr><th>نماد</th><th>نوع</th><th>حجم</th><th>ورود</th><th>SL</th><th>TP</th><th>قیمت</th><th>سود/ضرر</th><th>زمان</th><th>بستن</th></tr></thead><tbody id="positions"></tbody></table></div>
+<div id="openEmpty" class="empty">معامله بازی وجود ندارد.</div>
+</div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>تاریخچه معاملات</h3><button class="btn" id="exportHistory">خروجی CSV</button></div>
+<div class="tablewrap"><table><thead><tr><th>نماد</th><th>نوع</th><th>حجم</th><th>ورود</th><th>خروج</th><th>نتیجه</th><th>علت بستن</th><th>زمان باز</th><th>زمان بسته</th></tr></thead><tbody id="history"></tbody></table></div>
+<div id="historyEmpty" class="empty">تاریخچه خالی است.</div>
+</div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>دفتر سفارش / رویدادها</h3><button class="btn" id="clearLog">پاک‌کردن</button></div>
+<div id="log" class="hint scrollnote">سیستم آماده است.</div>
+</div>
+
+</section>
+
+<aside>
+<div class="card"><div class="panel-title"><h3>ثبت سفارش</h3><span class="tag">Market</span></div>
+<div class="hint">سفارش با قیمت مرجع ثبت‌شده در این صفحه انجام می‌شود.</div>
+
+<div class="field sectiongap"><label for="volume">حجم معامله (Lot / قرارداد مجازی)</label><input id="volume" type="number" value="0.10" min="0.01" max="100" step="0.01"></div>
+
+<div class="formgrid"><div class="field"><label for="sl">Stop Loss (اختیاری)</label><input id="sl" type="number" step="any" placeholder="قیمت SL"></div>
+<div class="field"><label for="tp">Take Profit (اختیاری)</label><input id="tp" type="number" step="any" placeholder="قیمت TP"></div>
+</div>
+
+<div class="field"><label for="leverage">اهرم شبیه‌سازی</label><select id="leverage"><option value="1">1:1</option><option value="10">1:10</option><option value="20">1:20</option><option value="50" selected>1:50</option><option value="100">1:100</option><option value="200">1:200</option></select><div class="hint">اهرم صرفاً برای نمایش مارجین تقریبی استفاده می‌شود.</div>
+</div>
+
+<div class="orderbuttons"><button id="buy" class="buy">BUY / خرید</button><button id="sell" class="sell">SELL / فروش</button></div>
+
+<div class="two-col sectiongap"><div class="card"><small class="muted">Bid (تقریبی)</small><strong id="bid" style="display:block;direction:ltr;margin-top:8px">—</strong></div>
+<div class="card"><small class="muted">Ask (تقریبی)</small><strong id="ask" style="display:block;direction:ltr;margin-top:8px">—</strong></div>
+</div>
+
+</div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>واچ‌لیست</h3><span class="hint">انتخاب سریع نماد</span></div>
+<div class="watchlist" id="watchlist"></div>
+</div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>اطلاعات حساب</h3></div>
+<div class="hint">حساب دمو: 10,000 USD</div>
+<div class="hint">موجودی: <b id="accountBalanceSide">$10,000.00</b></div>
+<div class="hint">سود/زیان کل: <b id="totalPLSide">$0.00</b></div>
+<button class="btn danger sectiongap" style="width:100%" id="reset">بازنشانی حساب</button></div>
+
+<div class="card sectiongap"><div class="panel-title"><h3>راهنمای محاسبات</h3></div>
+<div class="hint">• طلا و نقره با قراردادهای مجازی شبیه‌سازی‌شده محاسبه می‌شوند.<br>• FX از نرخ‌های مرجع روزانه استفاده می‌کند، نه قیمت تیک بروکر.<br>• رمزارز از سرویس عمومی قیمت استفاده می‌کند.<br>• اسپرد، کمیسیون، سواپ و slippage در این نسخه اعمال نمی‌شوند.<br>• مارجین تخمینی است و قراردادها با بروکرها متفاوت‌اند.</div>
+</div>
+
+</aside>
+
+</div>
+
+<div class="footer">قیمت‌ها مرجع و ممکن است با بروکر متفاوت باشند. داده‌ها تضمین‌کننده قیمت اجرا نیستند. نمودار TradingView، قیمت فلزات از Gold API، نرخ FX از Frankfurter و رمزارز از CoinGecko دریافت می‌شود. معاملات کاملاً مجازی هستند.</div>
+
+</main>
+<div id="authOverlay" class="overlay"><div class="card modal"><button id="authClose" class="btn" style="float:left">✕</button><h2 class="green">ورود به حساب Amir Academy</h2><p class="hint">برای ورود به حساب دمو از همان ایمیل و رمز سایت استفاده کنید.</p><div class="field"><label for="authEmail">ایمیل</label><input id="authEmail" type="email" autocomplete="email"></div>
+<div class="field"><label for="authPassword">رمز عبور</label><input id="authPassword" type="password" autocomplete="current-password"></div>
+<button id="authSubmit" class="buy" style="width:100%">ورود</button><div id="authMessage" class="hint sectiongap"></div>
+<p class="hint"><a href="index.html">اگر حساب ندارید، در سایت اصلی ثبت‌نام کنید.</a></p></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL='https://qcfdgzistdeiymzwayfn.supabase.co';const SUPABASE_KEY='sb_publishable_fseWtWb8VEuaXtmP65mR7w_PQeG5ogA';let supabaseAuth=null;try{if(window.supabase)supabaseAuth=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(e){}
-const KEY='amirAcademyDemoXauV2';const OLD_KEY='amirAcademyDemoXauV1';
-let state={balance:10000,positions:[],history:[],quote:null,updated:null};
-let currentUser=null;let userKey=null;let authRequired=true;
-function setKeyForUser(user){currentUser=user;userKey=user?'amirAcademyDemoXau_'+user.id:null;}
-function load(){if(!userKey)return;try{let s=JSON.parse(localStorage.getItem(userKey));if(!s){const old=JSON.parse(localStorage.getItem(KEY));if(old&&typeof old.balance==='number'&&Array.isArray(old.positions)){s={...old,history:old.history||[]};localStorage.setItem(userKey,JSON.stringify(s));localStorage.removeItem(KEY);}else{const legacy=JSON.parse(localStorage.getItem(OLD_KEY));if(legacy&&typeof legacy.balance==='number'&&Array.isArray(legacy.positions)){s={...legacy,history:legacy.history||[]};localStorage.setItem(userKey,JSON.stringify(s));localStorage.removeItem(OLD_KEY);}}}if(s&&typeof s.balance==='number'&&Array.isArray(s.positions)){state={...state,...s};if(!Array.isArray(state.history))state.history=[];}}catch(e){console.warn(e)}}
-function save(){if(!userKey)return;try{localStorage.setItem(userKey,JSON.stringify({balance:state.balance,positions:state.positions,history:state.history}))}catch(e){console.warn('Saving demo state failed',e)}}
-function resetState(){state={balance:10000,positions:[],history:[],quote:state.quote,updated:state.updated};save();render();}
-function gate(){if(!currentUser){showAuth();return false}return true}
-function showAuth(){const o=document.getElementById('authOverlay');o.style.display='flex';document.getElementById('authMessage').textContent='';}
-function hideAuth(){document.getElementById('authOverlay').style.display='none'}
-async function refreshUser(){if(!supabaseAuth){document.getElementById('accountLabel').textContent='اتصال حساب در دسترس نیست';return}const {data}=await supabaseAuth.auth.getSession();const u=data.session?.user||null;setKeyForUser(u);if(u){load();render();const m=u.user_metadata||{};const uname=m.username||u.email?.split('@')[0]||'کاربر';document.getElementById('accountLabel').textContent='حساب: @'+uname;document.getElementById('loginBtn').style.display='none';document.getElementById('logoutBtn').style.display='inline-block';hideAuth();}else{document.getElementById('accountLabel').textContent='برای استفاده وارد حساب شوید';document.getElementById('loginBtn').style.display='inline-block';document.getElementById('logoutBtn').style.display='none';state={balance:10000,positions:[],history:[],quote:state.quote,updated:state.updated};render();}}
-const fmt=n=>Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-async function getQuote(){try{let r=await fetch('https://api.gold-api.com/price/XAU',{cache:'no-store'});if(!r.ok)throw new Error();let d=await r.json();if(!Number.isFinite(Number(d.price)))throw new Error();state.quote=Number(d.price);state.updated=d.updatedAt||new Date().toISOString();document.getElementById('status').textContent='قیمت دریافت شد';document.getElementById('quote').textContent='$'+fmt(state.quote);document.getElementById('updated').textContent='آخرین بروزرسانی: '+new Date(state.updated).toLocaleTimeString('fa-IR');render()}catch(e){document.getElementById('status').textContent='خطا در دریافت قیمت؛ دوباره تلاش می‌شود';}}
-function pnl(p){return (state.quote-p.entry)*(p.side==='buy'?1:-1)*p.volume}
-function render(){if(state.quote===null)return;let float=state.positions.reduce((s,p)=>s+pnl(p),0);document.getElementById('balance').textContent='$'+fmt(state.balance);let f=document.getElementById('floating');f.textContent=(float>=0?'+$':'-$')+fmt(Math.abs(float));f.className=float>=0?'positive':'negative';document.getElementById('equity').textContent='$'+fmt(state.balance+float);
-let tb=document.getElementById('positions');tb.innerHTML=state.positions.map(p=>{let v=pnl(p);return `<tr><td><span class="pill ${p.side}">${p.side==='buy'?'BUY':'SELL'}</span></td><td>${fmt(p.volume)}</td><td>${fmt(p.entry)}</td><td>${fmt(state.quote)}</td><td class="${v>=0?'positive':'negative'}">${v>=0?'+':'-'}$${fmt(Math.abs(v))}</td><td><button class="reset" onclick="closePos('${p.id}')">بستن</button></td></tr>`}).join('');document.getElementById('empty').style.display=state.positions.length?'none':'block';
-const hist=document.getElementById('history');hist.innerHTML=(state.history||[]).slice().reverse().map(p=>{const v=Number(p.pnl)||0;return `<tr><td><span class="pill ${p.side}">${p.side==='buy'?'BUY':'SELL'}</span></td><td>${fmt(p.volume)}</td><td>${fmt(p.entry)}</td><td>${fmt(p.exit)}</td><td class="${v>=0?'positive':'negative'}">${v>=0?'+':'-'}$${fmt(Math.abs(v))}</td><td>${p.closedAt?new Date(p.closedAt).toLocaleString('fa-IR'):'—'}</td></tr>`}).join('');document.getElementById('historyEmpty').style.display=state.history.length?'none':'block';
-}
-function open(side){if(!gate())return;if(state.quote===null){alert('قیمت هنوز دریافت نشده؛ چند لحظه صبر کنید.');return}let v=Number(document.getElementById('volume').value);if(!Number.isFinite(v)||v<=0||v>100){alert('حجم معتبر (بین 0.01 تا 100) وارد کنید.');return}state.positions.push({id:Date.now().toString()+Math.random().toString(16).slice(2),side,volume:v,entry:state.quote,openedAt:new Date().toISOString()});save();render()}
-function closePos(id){if(!gate())return;let p=state.positions.find(x=>x.id===id);if(!p||state.quote===null)return;let finalPnl=pnl(p);state.balance+=finalPnl;state.history.push({...p,exit:state.quote,pnl:finalPnl,closedAt:new Date().toISOString()});state.positions=state.positions.filter(x=>x.id!==id);save();render()}
-window.closePos=closePos;document.getElementById('buy').onclick=()=>open('buy');document.getElementById('sell').onclick=()=>open('sell');document.getElementById('reset').onclick=()=>{if(!gate())return;if(confirm('حساب دمو و تمام تاریخچه آن از ابتدا تنظیم شوند؟'))resetState()};document.getElementById('loginBtn').onclick=showAuth;document.getElementById('authClose').onclick=hideAuth;document.getElementById('authSubmit').onclick=async()=>{const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;const msg=document.getElementById('authMessage');if(!supabaseAuth){msg.textContent='اتصال احراز هویت برقرار نیست.';return}if(!email||!password){msg.textContent='ایمیل و رمز را وارد کنید.';return}msg.textContent='در حال ورود…';const {error}=await supabaseAuth.auth.signInWithPassword({email,password});if(error){msg.textContent=error.message;return}await refreshUser();msg.textContent='ورود موفق';};document.getElementById('logoutBtn').onclick=async()=>{if(supabaseAuth)await supabaseAuth.auth.signOut();await refreshUser();};if(supabaseAuth)supabaseAuth.auth.onAuthStateChange(()=>refreshUser());getQuote();setInterval(getQuote,30000);refreshUser();render();
-</script></body></html>
+/* ---------- Auth configuration: use the same Supabase project as the main site ---------- */
+const SUPABASE_URL='https://qcfdgzistdeiymzwayfn.supabase.co';
+
+const SUPABASE_KEY='sb_publishable_fseWtWb8VEuaXtmP65mR7w_PQeG5ogA';
+
+let supabaseAuth=null;
+try{if(window.supabase)supabaseAuth=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY)}catch(err) {
+console.warn(err)}
+/* ---------- Trading simulator state ---------- */
+const START_BALANCE=10000, STORAGE_PREFIX='amirAcademyDemoTerminalV1_';
+
+const ASSETS={
+ XAUUSD:{label:'XAU/USD',name:'Gold',group:'Metals',kind:'metal',tv:'OANDA:XAUUSD',contract:100,precision:2},
+ XAGUSD:{label:'XAG/USD',name:'Silver',group:'Metals',kind:'metal',tv:'OANDA:XAGUSD',contract:5000,precision:3},
+ EURUSD:{label:'EUR/USD',name:'Euro / US Dollar',group:'Forex',kind:'fx',tv:'OANDA:EURUSD',contract:100000,precision:5},
+ GBPUSD:{label:'GBP/USD',name:'British Pound / US Dollar',group:'Forex',kind:'fx',tv:'OANDA:GBPUSD',contract:100000,precision:5},
+ USDJPY:{label:'USD/JPY',name:'US Dollar / Japanese Yen',group:'Forex',kind:'fx',tv:'OANDA:USDJPY',contract:100000,precision:3},
+ USDCHF:{label:'USD/CHF',name:'US Dollar / Swiss Franc',group:'Forex',kind:'fx',tv:'OANDA:USDCHF',contract:100000,precision:5},
+ AUDUSD:{label:'AUD/USD',name:'Australian Dollar / US Dollar',group:'Forex',kind:'fx',tv:'OANDA:AUDUSD',contract:100000,precision:5},
+ USDCAD:{label:'USD/CAD',name:'US Dollar / Canadian Dollar',group:'Forex',kind:'fx',tv:'OANDA:USDCAD',contract:100000,precision:5},
+ BTCUSD:{label:'BTC/USD',name:'Bitcoin',group:'Crypto',kind:'crypto',tv:'COINBASE:BTCUSD',contract:1,precision:2},
+ ETHUSD:{label:'ETH/USD',name:'Ethereum',group:'Crypto',kind:'crypto',tv:'COINBASE:ETHUSD',contract:1,precision:2}
+};
+
+let selected='XAUUSD',quotes={},quoteTime={},currentUser=null,userKey=null,refreshLock=false;
+
+let state={balance:START_BALANCE,positions:[],history:[],log:[]};
+
+/* ---------- Utility functions ---------- */
+const fmt=n=>Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+const priceFmt=(sym,n)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:ASSETS[sym]?.precision||2,maximumFractionDigits:ASSETS[sym]?.precision||2});
+
+function showToast(msg) {
+let el=document.getElementById('toast');
+el.textContent=msg;
+el.classList.add('show');
+clearTimeout(showToast.timer);
+showToast.timer=setTimeout(()=>el.classList.remove('show'),2800)}
+function addLog(message) {
+state.log.unshift({text:message,time:new Date().toISOString()});
+state.log=state.log.slice(0,40);
+save();
+renderLog()}
+function dateFa(s) {
+if(!s)return'—';
+return new Date(s).toLocaleString('fa-IR')}
+function setUser(u) {
+currentUser=u;
+userKey=u?STORAGE_PREFIX+u.id:null}
+function getPrice(sym) {
+return quotes[sym]??null}
+function asset(sym) {
+return ASSETS[sym]||ASSETS[selected]}
+function save() {
+if(!userKey)return;
+try{localStorage.setItem(userKey,JSON.stringify({balance:state.balance,positions:state.positions,history:state.history,log:state.log}))}catch(e) {
+console.warn('Storage write error',e)}}
+function load() {
+if(!userKey)return;
+try{let saved=JSON.parse(localStorage.getItem(userKey));
+if(saved) {
+state.balance=Number(saved.balance??START_BALANCE);
+state.positions=Array.isArray(saved.positions)?saved.positions:[];
+state.history=Array.isArray(saved.history)?saved.history:[];
+state.log=Array.isArray(saved.log)?saved.log:[]}}catch(e) {
+console.warn('Storage read error',e)}}
+function resetState() {
+state={balance:START_BALANCE,positions:[],history:[],log:[]};
+save();
+render();
+addLog('حساب دمو بازنشانی شد.')}
+function requireLogin() {
+if(!currentUser) {
+showAuth();
+showToast('برای معامله ابتدا وارد حساب شوید.');
+return false}return true}
+function showAuth() {
+document.getElementById('authOverlay').style.display='flex';
+document.getElementById('authMessage').textContent=''}
+function hideAuth() {
+document.getElementById('authOverlay').style.display='none'}
+/* ---------- Chart ---------- */
+function updateChart() {
+let a=ASSETS[selected];
+document.getElementById('assetTitle').textContent=a.label;
+document.getElementById('assetDescription').textContent=a.name+' · '+a.group;
+document.getElementById('chartBox').innerHTML=`<iframe title="TradingView ${a.label}" src="https://www.tradingview.com/widgetembed/?frameElementId=tvterminal&symbol=${encodeURIComponent(a.tv)}&interval=5&hidesidetoolbar=0&symboledit=0&saveimage=0&toolbarbg=111820&studies=%5B%5D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&locale=en" allowfullscreen></iframe>`}
+function updateWatchlist() {
+document.getElementById('watchlist').innerHTML=Object.keys(ASSETS).map(k=>{let q=quotes[k],active=k===selected;
+return `<div class="watchrow ${active?'selected':''}" data-symbol="${k}"><strong>${ASSETS[k].label}</strong><span class="muted">${ASSETS[k].group}</span><span class="q ${q!==undefined?'green':''}">${q===undefined?'—':priceFmt(k,q)}</span></div>
+`}).join('');
+document.querySelectorAll('.watchrow').forEach(row=>row.addEventListener('click',()=>selectAsset(row.dataset.symbol)))}
+/* ---------- Quote providers ---------- */
+async function fetchMetal(sym) {
+let r=await fetch('https://api.gold-api.com/price/'+(sym==='XAUUSD'?'XAU':'XAG'),{cache:'no-store'});
+if(!r.ok)throw new Error('Metal quote unavailable');
+let d=await r.json();
+return Number(d.price)}
+async function fetchFx(sym) {
+let base=sym.slice(0,3),target=sym.slice(3);
+let r=await fetch(`https://api.frankfurter.dev/v1/latest?base=${base}&symbols=${target}`,{cache:'no-store'});
+if(!r.ok)throw new Error('FX quote unavailable');
+let d=await r.json();
+return Number(d.rates[target])}
+async function fetchCrypto(sym) {
+let id=sym==='BTCUSD'?'bitcoin':'ethereum';
+let r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`,{cache:'no-store'});
+if(!r.ok)throw new Error('Crypto quote unavailable');
+let d=await r.json();
+return Number(d[id].usd)}
+async function fetchQuote(sym) {
+let a=ASSETS[sym],q;
+if(a.kind==='metal')q=await fetchMetal(sym);
+else if(a.kind==='fx')q=await fetchFx(sym);
+else q=await fetchCrypto(sym);
+if(!Number.isFinite(q)||q<=0)throw new Error('Invalid quote');
+quotes[sym]=q;
+quoteTime[sym]=new Date().toISOString();
+return q}
+async function refreshQuotes() {
+if(refreshLock)return;
+refreshLock=true;
+try{let wanted=[selected,...state.positions.map(p=>p.asset)];
+wanted=[...new Set(wanted)];
+await Promise.all(wanted.map(s=>fetchQuote(s).catch(err=>console.warn('quote',s,err))));
+let q=getPrice(selected);
+if(q) {
+document.getElementById('connection').textContent='قیمت مرجع دریافت شد';
+document.getElementById('selectedQuote').textContent=priceFmt(selected,q);
+document.getElementById('quote').textContent=priceFmt(selected,q);
+document.getElementById('updated').textContent=dateFa(quoteTime[selected]);
+document.getElementById('bid').textContent=priceFmt(selected,q);
+document.getElementById('ask').textContent=priceFmt(selected,q);
+render();
+checkStops()}else document.getElementById('connection').textContent='در انتظار قیمت / تلاش مجدد';
+updateWatchlist()}catch(err) {
+document.getElementById('connection').textContent='خطای دریافت قیمت'}finally{refreshLock=false}}
+async function selectAsset(sym) {
+selected=sym;
+document.getElementById('assetSelect').value=sym;
+updateChart();
+let q=getPrice(sym);
+document.getElementById('selectedQuote').textContent=q?priceFmt(sym,q):'—';
+if(!q)await fetchQuote(sym).catch(console.warn);
+render();
+updateWatchlist()}
+/* ---------- Profit, margin and risk calculations ---------- */
+function calcPnl(p) {
+let q=getPrice(p.asset);
+if(q===null)return 0;
+let a=ASSETS[p.asset],difference=(q-p.entry)*(p.side==='buy'?1:-1);
+let result=difference*Number(p.volume)*a.contract;
+if(p.asset==='USDJPY')result=result/q;
+return result}
+function calcMargin(p) {
+let q=getPrice(p.asset)||p.entry;
+let a=ASSETS[p.asset];
+let leverage=Number(p.leverage||50);
+let notional=Number(p.volume)*a.contract*q;
+if(['EURUSD','GBPUSD','AUDUSD'].includes(p.asset))notional=Number(p.volume)*a.contract*q;
+return notional/leverage}
+function totalFloating() {
+return state.positions.reduce((sum,p)=>sum+calcPnl(p),0)}
+function closedTotal() {
+return state.history.reduce((sum,p)=>sum+Number(p.pnl||0),0)}
+function totalMargin() {
+return state.positions.reduce((sum,p)=>sum+calcMargin(p),0)}
+function checkStops() {
+let closes=[];
+state.positions.forEach(p=>{let q=getPrice(p.asset);
+if(q===null)return;
+if(p.tp&&((p.side==='buy'&&q>=p.tp)||(p.side==='sell'&&q<=p.tp)))closes.push({id:p.id,why:'TP'});
+else if(p.sl&&((p.side==='buy'&&q<=p.sl)||(p.side==='sell'&&q>=p.sl)))closes.push({id:p.id,why:'SL'})});
+closes.forEach(x=>closePosition(x.id,x.why,true))}
+/* ---------- Order operations ---------- */
+function openPosition(side) {
+if(!requireLogin())return;
+let q=getPrice(selected);
+if(q===null) {
+showToast('قیمت این نماد هنوز دریافت نشده.');
+return}let volume=Number(document.getElementById('volume').value),slRaw=document.getElementById('sl').value,tpRaw=document.getElementById('tp').value,sl=slRaw===''?null:Number(slRaw),tp=tpRaw===''?null:Number(tpRaw);
+if(!Number.isFinite(volume)||volume<0.01||volume>100) {
+showToast('حجم باید بین 0.01 و 100 باشد');
+return}if(sl!==null&&(!Number.isFinite(sl)||sl<=0)) {
+showToast('حد ضرر معتبر نیست');
+return}if(tp!==null&&(!Number.isFinite(tp)||tp<=0)) {
+showToast('حد سود معتبر نیست');
+return}if(side==='buy'&&sl!==null&&sl>=q) {
+showToast('SL خرید باید پایین‌تر از قیمت ورود باشد');
+return}if(side==='buy'&&tp!==null&&tp<=q) {
+showToast('TP خرید باید بالاتر از قیمت ورود باشد');
+return}if(side==='sell'&&sl!==null&&sl<=q) {
+showToast('SL فروش باید بالاتر از قیمت ورود باشد');
+return}if(side==='sell'&&tp!==null&&tp>=q) {
+showToast('TP فروش باید پایین‌تر از قیمت ورود باشد');
+return}
+let pos={id:Date.now().toString()+Math.random().toString(16).slice(2),asset:selected,side,volume,entry:q,sl,tp,leverage:Number(document.getElementById('leverage').value),openedAt:new Date().toISOString()};
+state.positions.push(pos);
+save();
+render();
+addLog(`${side.toUpperCase()} ${ASSETS[selected].label} · ${volume} lot @ ${priceFmt(selected,q)}`);
+showToast('سفارش دمو ثبت شد')}
+function closePosition(id,reason='Manual',automatic=false) {
+let p=state.positions.find(x=>x.id===id);
+if(!p)return;
+let q=getPrice(p.asset);
+if(q===null)return;
+let result=calcPnl(p);
+state.balance+=result;
+state.history.push({...p,exit:q,pnl:result,reason,closedAt:new Date().toISOString()});
+state.positions=state.positions.filter(x=>x.id!==id);
+save();
+render();
+addLog(`بستن ${ASSETS[p.asset].label} · ${reason} · ${result>=0?'+':''}$${fmt(result)}`);
+if(!automatic)showToast(`معامله بسته شد: ${result>=0?'+':''}$${fmt(result)}`)}
+/* ---------- Render ---------- */
+function render() {
+let floating=totalFloating(),margin=totalMargin(),equity=state.balance+floating,free=equity-margin;
+setText('balance','$'+fmt(state.balance));
+setText('equity','$'+fmt(equity));
+setText('floating',(floating>=0?'+$':'-$')+fmt(Math.abs(floating)));
+setClass('floating',floating>=0?'green':'red');
+setText('freeMargin','$'+fmt(free));
+setText('margin','$'+fmt(margin));
+setText('closedPL',(closedTotal()>=0?'+$':'-$')+fmt(Math.abs(closedTotal())));
+setClass('closedPL',closedTotal()>=0?'green':'red');
+setText('accountBalanceSide','$'+fmt(state.balance));
+setText('totalPLSide',(closedTotal()+floating>=0?'+$':'-$')+fmt(Math.abs(closedTotal()+floating)));
+setText('openCount',state.positions.length+' position(s)');
+renderPositions();
+renderHistory();
+updateWatchlist()}
+function setText(id,text) {
+let el=document.getElementById(id);
+if(el)el.textContent=text}
+function setClass(id,cls) {
+let el=document.getElementById(id);
+if(el)el.className=cls}
+function renderPositions() {
+let tb=document.getElementById('positions');
+tb.innerHTML=state.positions.map(p=>{let q=getPrice(p.asset),v=calcPnl(p);
+return `<tr><td>${ASSETS[p.asset].label}</td><td><span class="badge ${p.side}">${p.side.toUpperCase()}</span></td><td>${fmt(p.volume)}</td><td>${priceFmt(p.asset,p.entry)}</td><td>${p.sl===null?'—':priceFmt(p.asset,p.sl)}</td><td>${p.tp===null?'—':priceFmt(p.asset,p.tp)}</td><td>${q===null?'—':priceFmt(p.asset,q)}</td><td class="${v>=0?'green':'red'}">${v>=0?'+':'-'}$${fmt(Math.abs(v))}</td><td>${dateFa(p.openedAt)}</td><td><button class="btn danger" onclick="closePosition('${p.id}')">بستن</button></td></tr>`}).join('');
+document.getElementById('openEmpty').style.display=state.positions.length?'none':'block'}
+function renderHistory() {
+let tb=document.getElementById('history');
+tb.innerHTML=state.history.slice().reverse().map(p=>{let v=Number(p.pnl||0);
+return `<tr><td>${ASSETS[p.asset]?.label||p.asset}</td><td><span class="badge ${p.side}">${p.side.toUpperCase()}</span></td><td>${fmt(p.volume)}</td><td>${priceFmt(p.asset,p.entry)}</td><td>${priceFmt(p.asset,p.exit)}</td><td class="${v>=0?'green':'red'}">${v>=0?'+':'-'}$${fmt(Math.abs(v))}</td><td>${p.reason||'Manual'}</td><td>${dateFa(p.openedAt)}</td><td>${dateFa(p.closedAt)}</td></tr>`}).join('');
+document.getElementById('historyEmpty').style.display=state.history.length?'none':'block'}
+function renderLog() {
+let el=document.getElementById('log');
+el.innerHTML=state.log.map(x=>`<div style="padding:6px 0;
+border-bottom:1px solid var(--line)">${dateFa(x.time)} · ${x.text}</div>
+`).join('')||'سیستم آماده است.'}
+/* ---------- CSV export ---------- */
+function exportCSV() {
+if(!state.history.length) {
+showToast('تاریخچه‌ای برای خروجی وجود ندارد');
+return}let rows=[['Symbol','Side','Volume','Entry','Exit','P/L USD','Reason','Opened','Closed'],...state.history.map(p=>[ASSETS[p.asset].label,p.side,p.volume,p.entry,p.exit,p.pnl,p.reason,p.openedAt,p.closedAt])];
+let csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n');
+let blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+a.href=url;
+a.download='amir-academy-demo-history.csv';
+a.click();
+URL.revokeObjectURL(url)}
+/* ---------- Authentication ---------- */
+async function refreshUser() {
+if(!supabaseAuth) {
+setText('accountLabel','Auth service در دسترس نیست');
+return}let {data}=await supabaseAuth.auth.getSession();
+let u=data.session?.user||null;
+if(u) {
+setUser(u);
+load();
+render();
+let username=u.user_metadata?.username||u.email?.split('@')[0]||'user';
+setText('accountLabel','حساب: @'+username);
+document.getElementById('loginBtn').style.display='none';
+document.getElementById('logoutBtn').style.display='inline-block';
+hideAuth()}else{setUser(null);
+state={balance:START_BALANCE,positions:[],history:[],log:[]};
+setText('accountLabel','برای معامله وارد حساب شوید');
+document.getElementById('loginBtn').style.display='inline-block';
+document.getElementById('logoutBtn').style.display='none';
+render()}}
+/* ---------- Event wiring / startup ---------- */
+document.getElementById('assetSelect').addEventListener('change',e=>selectAsset(e.target.value));
+
+document.getElementById('buy').addEventListener('click',()=>openPosition('buy'));
+
+document.getElementById('sell').addEventListener('click',()=>openPosition('sell'));
+
+document.getElementById('reset').addEventListener('click',()=>{if(requireLogin()&&confirm('تمام معاملات باز، تاریخچه و موجودی حساب دمو بازنشانی شود؟'))resetState()});
+
+document.getElementById('loginBtn').addEventListener('click',showAuth);
+
+document.getElementById('authClose').addEventListener('click',hideAuth);
+
+document.getElementById('authSubmit').addEventListener('click',async()=>{let email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value,msg=document.getElementById('authMessage');
+if(!supabaseAuth) {
+msg.textContent='سرویس احراز هویت در دسترس نیست';
+return}if(!email||!password) {
+msg.textContent='ایمیل و رمز را وارد کنید';
+return}msg.textContent='در حال ورود…';
+let {error}=await supabaseAuth.auth.signInWithPassword({email,password});
+if(error) {
+msg.textContent=error.message;
+return}await refreshUser();
+msg.textContent='ورود موفق'});
+
+document.getElementById('logoutBtn').addEventListener('click',async()=>{if(supabaseAuth)await supabaseAuth.auth.signOut();
+await refreshUser()});
+
+document.getElementById('exportHistory').addEventListener('click',exportCSV);
+
+document.getElementById('clearLog').addEventListener('click',()=>{state.log=[];
+save();
+renderLog()});
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideAuth()});
+
+if(supabaseAuth)supabaseAuth.auth.onAuthStateChange(()=>refreshUser());
+
+document.getElementById('marketClock').textContent=new Date().toLocaleTimeString('fa-IR');
+
+setInterval(()=>document.getElementById('marketClock').textContent=new Date().toLocaleTimeString('fa-IR'),1000);
+
+updateChart();
+updateWatchlist();
+render();
+refreshQuotes();
+refreshUser();
+setInterval(refreshQuotes,30000);
+
+</script>
+</body></html>
+
